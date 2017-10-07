@@ -8,6 +8,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class Hook extends BaseUtil {
 
+    /**
+     * Define steps just like in CommonAPI for Web Automation.
+     * @Before and @After Annotations are from Cucumber Dependency.
+     *
+     * In some classes I create an object from BaseUtil class,
+     * and make a Constructor that passes BaseUtil as signature.
+     * This is called Dependency Injection.
+     */
+
     private BaseUtil base;
 
     public Hook(BaseUtil base) {

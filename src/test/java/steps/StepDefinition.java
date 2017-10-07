@@ -23,6 +23,10 @@ import java.util.concurrent.TimeUnit;
 
 public class StepDefinition extends BaseUtil {
 
+    /**
+     * Steps which are reproduced from 'login.feature'.
+     */
+
     private BaseUtil base;
 
     public StepDefinition(BaseUtil base) {
