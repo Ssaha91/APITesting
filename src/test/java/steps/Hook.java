@@ -29,5 +29,6 @@ public class Hook extends BaseUtil {
             System.out.println(scenario.getName());
         }
         System.out.println("Closing The Browser: Chrome");
+        base.driver.quit();
     }
 }

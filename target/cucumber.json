@@ -1,0 +1,220 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "before": [
+          {
+            "result": {
+              "duration": 1346042766,
+              "status": "passed"
+            },
+            "match": {
+              "location": "Hook.InitializeTest()"
+            }
+          }
+        ],
+        "line": 11,
+        "name": "Login with valid credentials",
+        "description": "",
+        "id": "facebook-login;login-with-valid-credentials;;2",
+        "after": [
+          {
+            "result": {
+              "duration": 81516284,
+              "status": "passed"
+            },
+            "match": {
+              "location": "Hook.TearDownTest(Scenario)"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario Outline",
+        "steps": [
+          {
+            "result": {
+              "duration": 2026954772,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "I am on facebook homepage",
+            "match": {
+              "location": "StepDefinition.iAmOnFacebookHomepage()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 692160625,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "I enter valid \"ibrahimkhan1994@hotmail.com\" and \"Surrahee22\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "ibrahimkhan1994@hotmail.com",
+                  "offset": 15
+                },
+                {
+                  "val": "Surrahee22",
+                  "offset": 49
+                }
+              ],
+              "location": "StepDefinition.iEnterValidAnd(String,String)"
+            },
+            "matchedColumns": [
+              0,
+              1
+            ],
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 4554229731,
+              "status": "passed"
+            },
+            "line": 7,
+            "name": "I click on login button",
+            "match": {
+              "location": "StepDefinition.iClickOnLoginButton()"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 67420686,
+              "status": "passed"
+            },
+            "line": 8,
+            "name": "I logged into facebook",
+            "match": {
+              "location": "StepDefinition.iLoggedIntoFacebook()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "before": [
+          {
+            "result": {
+              "duration": 714176957,
+              "status": "passed"
+            },
+            "match": {
+              "location": "Hook.InitializeTest()"
+            }
+          }
+        ],
+        "line": 13,
+        "name": "Login with invalid credentials",
+        "description": "",
+        "id": "facebook-login;login-with-invalid-credentials",
+        "after": [
+          {
+            "result": {
+              "duration": 77432612,
+              "status": "passed"
+            },
+            "match": {
+              "location": "Hook.TearDownTest(Scenario)"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 1715386385,
+              "status": "passed"
+            },
+            "line": 14,
+            "name": "I am on facebook homepage",
+            "match": {
+              "location": "StepDefinition.iAmOnFacebookHomepage()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 230051,
+              "status": "passed"
+            },
+            "line": 15,
+            "name": "I enter the users email address as email:\"admin\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "admin",
+                  "offset": 42
+                }
+              ],
+              "location": "StepDefinition.iEnterTheUsersEmailAddressAsEmail(String)"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 605190930,
+              "status": "passed"
+            },
+            "line": 16,
+            "name": "I enter the following",
+            "match": {
+              "location": "StepDefinition.i_enter_the_following(DataTable)"
+            },
+            "rows": [
+              {
+                "cells": [
+                  "username",
+                  "password"
+                ],
+                "line": 17
+              },
+              {
+                "cells": [
+                  "abc123@gmail.com",
+                  "abc123"
+                ],
+                "line": 18
+              }
+            ],
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 30454182156,
+              "status": "passed"
+            },
+            "line": 19,
+            "name": "I click on login button",
+            "match": {
+              "location": "StepDefinition.iClickOnLoginButton()"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 513890,
+              "status": "passed"
+            },
+            "line": 20,
+            "name": "I will get a notification for invalid username/password",
+            "match": {
+              "location": "StepDefinition.iWillGetANotificationForInvalidUsernamePassword()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "Facebook Login",
+    "description": "This feature deals with the login functionality",
+    "id": "facebook-login",
+    "keyword": "Feature",
+    "uri": "login.feature"
+  }
+]

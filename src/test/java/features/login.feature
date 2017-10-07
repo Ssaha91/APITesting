@@ -8,7 +8,7 @@ Feature: Facebook Login
     Then I logged into facebook
     Examples:
       | username          | password |
-      | test123@gmail.com | abcd1234 |
+      | abcd134@gmail.com | abcd1234 |
 
   Scenario: Login with invalid credentials
     Given I am on facebook homepage

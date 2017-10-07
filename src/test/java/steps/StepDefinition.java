@@ -36,17 +36,20 @@ public class StepDefinition extends BaseUtil {
 
     @When("^I enter valid \"([^\"]*)\" and \"([^\"]*)\"$")
     public void iEnterValidAnd(String username, String password) {
-
+        base.driver.findElement(By.id("email")).sendKeys(username);
+        base.driver.findElement(By.id("pass")).sendKeys(password);
     }
 
     @And("^I click on login button$")
     public void iClickOnLoginButton() {
-        base.driver.findElement(By.xpath(".//input[@type='submit']")).click();
+        LoginPage page = new LoginPage(base.driver);
+        page.clickLogin();
     }
 
     @Then("^I logged into facebook$")
     public void iLoggedIntoFacebook() {
-
+        LoginPage page = new LoginPage(base.driver);
+        page.isDisplayedSuccessfulLogin();
     }
 
     @And("^I enter the users email address as email:\"([^\"]*)\"$")
@@ -59,14 +62,17 @@ public class StepDefinition extends BaseUtil {
         List<User> users = new ArrayList<>();
         // Storing the users
         users = table.asList(User.class);
+
+        LoginPage page = new LoginPage(base.driver);
+
         for(User user : users) {
-            base.driver.findElement(By.id("email")).sendKeys(user.username);
-            base.driver.findElement(By.id("pass")).sendKeys(user.password);
+            page.Login(user.username, user.password);
         }
     }
 
     @Then("^I will get a notification for invalid username/password$")
     public void iWillGetANotificationForInvalidUsernamePassword() {
+        LoginPage page = new LoginPage(base.driver);
     }
 
     public class User {
