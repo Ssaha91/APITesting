@@ -1,31 +1,27 @@
 package steps;
 
-import Base.BaseUtil;
+import base.BaseUtil;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.Transform;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import pages.LoginPage;
 import transformation.EmailTransform;
+import utils.ConfigFileReader;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class StepDefinition extends BaseUtil {
 
     /**
      * Steps which are reproduced from 'login.feature'.
      */
+
+    ConfigFileReader configFileReader;
 
     private BaseUtil base;
 
@@ -35,7 +31,10 @@ public class StepDefinition extends BaseUtil {
 
     @Given("^I am on facebook homepage$")
     public void iAmOnFacebookHomepage() {
-        base.driver.navigate().to("https://www.facebook.com/");
+        configFileReader = new ConfigFileReader();
+        base.driver.navigate().to(configFileReader.getApplicationUrl());
+        //base.driver.navigate().to("https://www.facebook.com/");
+
     }
 
     @When("^I enter valid \"([^\"]*)\" and \"([^\"]*)\"$")
