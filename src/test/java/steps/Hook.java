@@ -4,25 +4,23 @@ import base.BaseUtil;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import io.restassured.RestAssured;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import utils.ConfigFileReader;
 
-import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
+import java.net.URL;
 
 public class Hook extends BaseUtil {
 
-    String browserChoice = "Chrome";
-    //String browserChoice = "Firefox";
-    //String browserChoice = "IE";
+    public static final String USERNAME = "YOUR_USERNAME";
+    public static final String ACCESS_KEY = "YOUR_ACCESS_KEY";
+    public static final String URL = "https://" + USERNAME + ":" + ACCESS_KEY + "@ondemand.saucelabs.com:443/wd/hub";
 
     /**
      * Define steps just like in CommonAPI for Web Automation.
@@ -45,30 +43,44 @@ public class Hook extends BaseUtil {
     public void InitializeTest() throws IOException {
         configFileReader = new ConfigFileReader();
 
-        if (configFileReader.getDriverPath().contains("chrome")) {
-            startChrome();
-        } else if (configFileReader.getDriverPath().contains("gecko")) {
-            startFirefox();
-        } else if (configFileReader.getDriverPath().contains("IE")) {
-            startInternetExplorer();
-        }
+        if (configFileReader.doApiTesting().equalsIgnoreCase("true")) {
+            System.out.println("Running API Test");
 
+            RestAssured.baseURI = configFileReader.getAPIBaseURI();
+            RestAssured.basePath = configFileReader.getAPIBasePath();
+        } else {
+            if (configFileReader.getSauceLabs().equalsIgnoreCase("true")) {
+                initiateSauceLabs();
+            } else if (configFileReader.getLocalDriver().equalsIgnoreCase("true")) {
+                if (configFileReader.getDriverPath().contains("chrome")) {
+                    startChrome();
+                } else if (configFileReader.getDriverPath().contains("gecko")) {
+                    startFirefox();
+                } else if (configFileReader.getDriverPath().contains("IE")) {
+                    startInternetExplorer();
+                }
+            }
+        }
     }
 
     private void startInternetExplorer() {
         System.setProperty("webdriver.ie.driver", configFileReader.getDriverPath());
-        base.driver = new InternetExplorerDriver();
+        DesiredCapabilities dc = DesiredCapabilities.internetExplorer();
+        dc.setCapability("ignoreZoomSetting", true);
+        //dc.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+        //dc.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
+        //dc.setCapability(InternetExplorerDriver.ENABLE_ELEMENT_CACHE_CLEANUP, true);
+        base.driver = new InternetExplorerDriver(dc);
         base.driver.manage().window().maximize();
-        base.driver.manage().timeouts().implicitlyWait(configFileReader.getImplicitlyWait(), TimeUnit.SECONDS);
-        base.driver.manage().deleteAllCookies();
-
+        //base.driver.manage().timeouts().implicitlyWait(configFileReader.getImplicitlyWait(), TimeUnit.SECONDS);
+        //base.driver.manage().deleteAllCookies();
     }
 
     private void startFirefox() {
         System.setProperty("webdriver.gecko.driver", configFileReader.getDriverPath());
         base.driver = new FirefoxDriver();
         base.driver.manage().window().maximize();
-        base.driver.manage().timeouts().implicitlyWait(configFileReader.getImplicitlyWait(), TimeUnit.SECONDS);
+        //base.driver.manage().timeouts().implicitlyWait(configFileReader.getImplicitlyWait(), TimeUnit.SECONDS);
         base.driver.manage().deleteAllCookies();
     }
 
@@ -76,8 +88,20 @@ public class Hook extends BaseUtil {
         System.setProperty("webdriver.chrome.driver", configFileReader.getDriverPath());
         base.driver = new ChromeDriver();
         base.driver.manage().window().maximize();
-        base.driver.manage().timeouts().implicitlyWait(configFileReader.getImplicitlyWait(), TimeUnit.SECONDS);
+        //base.driver.manage().timeouts().implicitlyWait(configFileReader.getImplicitlyWait(), TimeUnit.SECONDS);
         base.driver.manage().deleteAllCookies();
+    }
+
+    private void initiateSauceLabs() {
+        DesiredCapabilities caps = DesiredCapabilities.chrome();
+        caps.setCapability("platform", "Windows 10");
+        caps.setCapability("version", "latest");
+
+        try {
+            base.driver = new RemoteWebDriver(new URL(URL), caps);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     @After
@@ -87,7 +111,11 @@ public class Hook extends BaseUtil {
             // Take Screenshot
             System.out.println(scenario.getName());
         }
-        base.driver.quit();
-    }
 
+        if (configFileReader.doApiTesting().equalsIgnoreCase("true")) {
+            System.out.println("API Testing Ended");
+        } else {
+            base.driver.quit();
+        }
+    }
 }

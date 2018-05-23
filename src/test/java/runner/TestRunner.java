@@ -14,7 +14,8 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
         features = {"src/test/java/features"},
         glue = {"steps"},
         format = {"json:target/cucumber.json", "html:target/site/cucumber-pretty"},
-        tags = {"@Web1"}
+        //tags = {"@Web2, @Web1"
+        tags = {"@Web3"}
 )
 /**
  * Runs with TestNG by Extending to 'AbstractTestNGCucumberTests'

@@ -1,7 +1,6 @@
-steps/StepDefinition$User.class
-runner/TestRunner.class
-steps/StepDefinition.class
-steps/Hook.class
-pages/LoginPage.class
-transformation/EmailTransform.class
-base/BaseUtil.class
+pages\LoginPage.class
+utils\ConfigFileReader.class
+steps\Hook.class
+transformation\EmailTransform.class
+base\BaseUtil.class
+runner\TestRunner.class
